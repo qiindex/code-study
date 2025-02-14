@@ -2,7 +2,7 @@ package main
 
 import (
 	 "go-study/business/list_info"
-	 "go-study/business/string_info"
+	 "gostudy/business/string_info"
 )
 
 func main() {
