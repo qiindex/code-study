@@ -1,5 +1,5 @@
 package listinfo
 
-func  sortInfo(a int ) int {
+func  SortInfo(a int ) int {
 	return a *a
 }
