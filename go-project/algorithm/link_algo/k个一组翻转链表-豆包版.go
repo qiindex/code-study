@@ -24,7 +24,7 @@ func reverseKGroup(head *ListNode, k int) *ListNode {
 
 		// 记录k个节点的起始和结束位置
 		next := tail.Next
-		headNew, tailNew := reverse(head, tail)
+		headNew, tailNew := reverse1(head, tail)
 
 		// 将翻转后的子链表连接到主链表中
 		prev.Next = headNew

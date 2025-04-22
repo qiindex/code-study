@@ -29,6 +29,7 @@ func reverseList(head *ListNode) *ListNode {
 	return prev
 }
 
+// 翻转两个节点之间
 func reverseListBetweenNode(head *ListNode, tail *ListNode) (*ListNode, *ListNode) {
 	prev := tail.Next
 	current := head
@@ -39,5 +40,20 @@ func reverseListBetweenNode(head *ListNode, tail *ListNode) (*ListNode, *ListNod
 		current = nextTemp
 	}
 	return tail, head
+
+}
+
+// 翻转节点和后面k个
+func reverseKNode(head, tail *ListNode, k int) (*ListNode, *ListNode) {
+	var pre *ListNode = nil
+	current := head
+
+	for i := 0; i < k; i++ {
+		next := current.Next
+		current.Next = pre
+		pre = current
+		current = next
+	}
+	return pre, head
 
 }
