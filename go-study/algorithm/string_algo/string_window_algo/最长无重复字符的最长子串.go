@@ -1,4 +1,4 @@
-package 滑动窗口
+package string_window_algo
 
 // 最长无重复字符的最长子串
 /*

@@ -1,4 +1,4 @@
-package 滑动窗口
+package int_window_algo
 
 import (
 	"container/heap"
