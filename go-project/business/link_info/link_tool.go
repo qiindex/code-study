@@ -1,4 +1,4 @@
-package linkInfo
+package link_info
 
 import "strings"
 
