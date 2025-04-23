@@ -1,50 +1,16 @@
 package main
 
 import (
-	"fmt"
-	"sync"
-	"time"
+	"go-study/algorithm/demo_design"
+	"go-study/business/link_info"
 )
 
-/*unc main() {
+func main() {
 	// demo
 	demo_design.Demo()
 	//
-	linkList := link_info.CreateList([]int{1, 2, 3, 4, 5, 6, 7, 8})
+	linkList := link_info.CreateList([]int{1, 2, 3, 4, 5})
 	link_info.PrintList(linkList)
-	reverseLink := link_info.ReverseLink(linkList)
+	reverseLink := link_info.RemoveNthFromEnd(linkList, 2)
 	link_info.PrintList(reverseLink)
-}*/
-
-func main1() {
-	s := []int{1, 2, 3}
-
-	for _, v := range s {
-		//a := v
-		go func(v int) {
-
-			println(v)
-
-		}(v)
-	}
-
-	//select {}
-	time.Sleep(1 * time.Second)
-}
-func main() {
-	var mu sync.Mutex
-	counter := 0
-
-	for i := 0; i < 1000; i++ {
-
-		go func() {
-			mu.Lock()
-			counter++
-			mu.Unlock()
-
-		}()
-	}
-	time.Sleep(time.Second)
-	fmt.Println("Finally Counter:", counter)
-	//select {}
 }
