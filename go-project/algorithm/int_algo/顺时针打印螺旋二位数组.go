@@ -13,7 +13,7 @@ package int_algo
 输出：[1,2,3,6,9,8,7,4,5]
 */
 
-// 官方题解
+// 官方题解：没看懂
 func spiralOrder(matrix [][]int) []int {
 	if len(matrix) == 0 || len(matrix[0]) == 0 {
 		return []int{}
@@ -101,7 +101,7 @@ func SpiralOrderV2(matrix [][]int) []int {
 	leftCol, rightCol := 0, cols-1
 	topRow, bottomRow := 0, rows-1
 	//res := make([]int, 0, rows*cols) 这样没有给了容量，但是没有赋予0值，不会有问题；
-	res := make([]int, 0) //leng
+	res := make([]int, 0) //len，容量和大小都是0，可以安心用append
 
 	for leftCol <= rightCol && topRow <= bottomRow {
 		// 从左边到右边，遍历第一行；其实就是第一列到最后一列的第一层数字，其实是遍历列
