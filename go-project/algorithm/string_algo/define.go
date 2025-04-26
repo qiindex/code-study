@@ -18,3 +18,9 @@ func Min3(a, b, c int) int {
 	}
 	return minVal
 }
+func Max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
+}

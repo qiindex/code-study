@@ -50,7 +50,7 @@ func lengthOfLongestSubstring(s string) int {
 	return maxLength
 }
 
-//自己手写的，用模版套写
+//自己手写的，
 /*
 思路：滑动窗口计算长度，左右指针移动
 关键步骤：用map记录是否存在，判断窗口的内容是否重复，key是字符，value是bool
@@ -74,71 +74,6 @@ func LengthOfLongestSubStringByManually(s string) int {
 	}
 	return maxLength
 
-}
-
-// abba 自己手写的V2，保存重复元素的下一个
-func LengthOfLongestSubStringByManuallyV2(s string) int {
-	maxLength, left := 0, 0
-	hashMap := make(map[byte]int)
-
-	for right := 0; right < len(s); right++ {
-		if lastIndex, exist := hashMap[s[right]]; exist && lastIndex >= left {
-			left = lastIndex + 1
-		}
-		hashMap[s[right]] = right
-		if currentLength := right - left + 1; currentLength > maxLength {
-			maxLength = currentLength
-		}
-	}
-	return maxLength
-}
-
-// 自己手写官网的一种, 比较直观，直接添加
-func LengthOfLongestSubStringByManuallyV3(s string) int {
-
-	right, maxLength := -1, 0
-	hashMap := make(map[byte]bool)
-
-	for left := 0; left < len(s); left++ {
-		if left != 0 {
-			//hashMap[s[left-1]] = false
-			delete(hashMap, s[left-1])
-		}
-		for right+1 < len(s) && !hashMap[s[right+1]] {
-			hashMap[s[right+1]] = true
-			right++
-		}
-		if currentLength := right - left + 1; currentLength > maxLength {
-			maxLength = currentLength
-		}
-	}
-	return maxLength
-}
-
-// 通一提供
-func LengthOfLongestSubStringByTongYiV4(s string) int {
-	if len(s) == 0 {
-		return 0 // 提前处理空字符串
-	}
-
-	var hashMap [128]bool // 固定大小数组代替哈希表
-	right, maxLength := 0, 0
-
-	for left := 0; left < len(s); left++ {
-		if left != 0 {
-			hashMap[s[left-1]] = false // 移除左边界字符
-		}
-		for right < len(s) && !hashMap[s[right]] {
-			hashMap[s[right]] = true // 标记右边界字符
-			right++                  // 扩展右边界
-		}
-		currentLength := right - left
-		if currentLength > maxLength {
-			maxLength = currentLength
-		}
-	}
-
-	return maxLength
 }
 
 /*
