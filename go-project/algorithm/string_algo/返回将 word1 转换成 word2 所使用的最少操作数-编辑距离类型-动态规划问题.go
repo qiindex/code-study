@@ -51,8 +51,8 @@ func minDistance(word1 string, word2 string) int {
 				dp[i][j] = dp[i-1][j-1]
 			} else {
 				// dp[i][j]=min( dp[i−1][j],dp[i][j−1],dp[i−1][j−1]     )+1
-				dp[i][j] = min(dp[i-1][j],
-					min(dp[i][j-1],
+				dp[i][j] = Min(dp[i-1][j],
+					Min(dp[i][j-1],
 						dp[i-1][j-1]),
 				) + 1
 			}
@@ -60,13 +60,6 @@ func minDistance(word1 string, word2 string) int {
 	}
 
 	return dp[m][n]
-}
-
-func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
 }
 
 /*func main() {
@@ -103,7 +96,7 @@ func minTimes(word1 string, word2 string) int {
 				dp[i][j] = dp[i-1][j-1] // 字符相同，无需操作
 			} else {
 				// 取 左（插入）、上（删除）、左上（替换）的最小值 + 1
-				dp[i][j] = min3(
+				dp[i][j] = Min3(
 					dp[i-1][j],   // 删除
 					dp[i][j-1],   // 插入
 					dp[i-1][j-1], // 替换
@@ -113,16 +106,4 @@ func minTimes(word1 string, word2 string) int {
 	}
 
 	return dp[m][n]
-}
-
-// 支持三个数比较的 min 函数
-func min3(a, b, c int) int {
-	minVal := a
-	if b < minVal {
-		minVal = b
-	}
-	if c < minVal {
-		minVal = c
-	}
-	return minVal
 }
