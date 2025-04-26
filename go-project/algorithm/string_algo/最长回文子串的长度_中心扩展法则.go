@@ -5,6 +5,7 @@ package string_algo
 /*
 思路：中心扩展法制
 */
+// 最长回文子串（的string内容）
 func longestPalindrome(s string) string {
 	maxstart := 0
 	maxLen := 0
