@@ -12,7 +12,6 @@ func main1() {
 
 // 找出来有可能最小的字典序
 func RemoveDuplicateLetters(s string) string {
-
 	//贪心算法，遍历循环，当前字段小于栈顶并且栈顶还存在，则一直删除栈顶的元素；
 	// 单调栈一直增加
 	//frequency := make([]int,26)
