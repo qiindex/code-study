@@ -1,6 +1,6 @@
-package main
+package int_algo
 
-import (
+/*import (
 	"fmt"
 )
 
@@ -9,9 +9,9 @@ func main() {
 
 	fmt.Println(CountNumberNV2(3))
 }
-
+*/
 // 跳台阶问题，一次跳一个，一次跳2个，跳N个台阶需要多少步？
-// 思路：（假设n>0,如果n=0，还需要增加逻辑直接返回0）
+//思路：（假设n>0,如果n=0，还需要增加逻辑直接返回0）
 func CountNumber(n int) int {
 	dp := make([]int, n+1)
 	dp[0] = 1 // 如果这里不写dp[0] =1,则需要判断n=0时，直接return 1
