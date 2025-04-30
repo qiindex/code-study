@@ -1,5 +1,9 @@
 package int_algo
 
+import (
+	"fmt"
+)
+
 /*import (
 	"fmt"
 )
@@ -31,9 +35,14 @@ func CountNumber(n int) int {
 
 }
 
-// 跳台阶问题，如果一次跳N个台阶?，
+// 跳台阶问题扩展2，如果一次可以跳N个台阶,那么跳到N个台阶，有多少种可能性?，
+// 思路：
 // 一种是数学推导出来结果是2的（n-1)次方，一种是用dp，dp计算前面的累加和；建议第一种；
-func CountNumberN(n int) int {
+func CountNumberNV1(n int) int {
+	if n == 0 {
+		// 跳到0个台阶，可以选择不跳
+		return 1
+	}
 	return 1 << (n - 1)
 }
 
@@ -51,4 +60,65 @@ func CountNumberNV2(n int) int {
 		}
 	}
 	return dp[n]
+}
+
+// 跳台阶问题扩展3，如果一次可以跳N个台阶,那么跳到M个台阶，有多少种可能性?，
+/*
+每次可以跳 1 到 n 个台阶，问跳到第 m 级台阶有多少种跳法？
+*/
+/*
+思路：
+递推关系​
+对于 m ≥ n，每次可以跳 1 到 n 步，因此：
+
+f(m)=f(m−1)+f(m−2)+⋯+f(m−n)
+其中：
+
+f(0) = 1（不跳）
+f(1) = 1（跳 1 步）
+f(2) = f(1) + f(0) = 2
+f(3) = f(2) + f(1) + f(0) = 4
+f(4) = f(3) + f(2) + f(1) + f(0) = 8
+
+观察规律​：
+
+当 m ≤ n 时，f(m) = 2^{m-1}（因为每次可以选择跳或不跳某些步）。
+当 m > n 时，f(m) = 2 * f(m-1) - f(m-n-1)（但更简单的是直接递推）
+*/
+func CountNumberNMV1(n, m int) int {
+	if m == 0 {
+		return 1
+	}
+	dp := make([]int, m+1)
+	dp[0] = 1 // 不跳也是一种方法
+	for i := 1; i <= m; i++ {
+		for j := 1; j <= n && j <= i; j++ {
+			dp[i] += dp[i-j]
+		}
+	}
+	return dp[m]
+}
+
+func main1() {
+	fmt.Println(CountNumberNMV1(2, 3)) // 3 (1+1+1, 1+2, 2+1)
+	fmt.Println(CountNumberNMV1(3, 4)) // 7 (1+1+1+1, 1+1+2, 1+2+1, 2+1+1, 2+2, 1+3, 3+1)
+}
+
+// 小于等于M时，可以用2（n-1）次方，大于m时，用dp,难理解
+func CountNumberNMV2(n, m int) int {
+	if m == 0 {
+		return 1
+	}
+	if m <= n {
+		return 1 << (m - 1) // 2^(m-1)
+	}
+	// 当 m > n 时，仍然需要递推
+	dp := make([]int, m+1)
+	dp[0] = 1
+	for i := 1; i <= m; i++ {
+		for j := 1; j <= n && j <= i; j++ {
+			dp[i] += dp[i-j]
+		}
+	}
+	return dp[m]
 }
