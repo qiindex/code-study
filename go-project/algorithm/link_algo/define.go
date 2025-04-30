@@ -33,3 +33,18 @@ func PrintList(head *ListNode) {
 	}
 	fmt.Println()
 }
+
+// 创建一个ListNode
+func CreateListNode(list []int) *ListNode {
+	head := &ListNode{
+		Val:  list[0],
+		Next: nil,
+	}
+	current := head
+	for i := 1; i < len(list); i++ {
+		temp := &ListNode{Val: list[i]}
+		current.Next = temp
+		current = current.Next
+	}
+	return head
+}
