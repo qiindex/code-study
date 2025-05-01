@@ -14,7 +14,7 @@ func main() {
 	fmt.Println(CountNumberNV2(3))
 }
 */
-// 跳台阶问题，一次跳一个，一次跳2个，跳N个台阶需要多少步？
+// 原始简单基础问题：跳台阶问题，一次跳一个，一次跳2个，跳N个台阶需要多少步？
 //思路：（假设n>0,如果n=0，还需要增加逻辑直接返回0）
 func CountNumber(n int) int {
 	dp := make([]int, n+1)
@@ -35,7 +35,9 @@ func CountNumber(n int) int {
 
 }
 
-// 跳台阶问题扩展2，如果一次可以跳N个台阶,那么跳到N个台阶，有多少种可能性?，
+/*跳台阶问题扩展2，如果一次可以跳N个台阶,那么跳到N个台阶，有多少种可能性?，
+ */
+
 // 思路：
 // 一种是数学推导出来结果是2的（n-1)次方，一种是用dp，dp计算前面的累加和；建议第一种；
 func CountNumberNV1(n int) int {
@@ -46,7 +48,7 @@ func CountNumberNV1(n int) int {
 	return 1 << (n - 1)
 }
 
-// 使用dp计算一次可以跳N个台阶
+// *******使用dp计算一次可以跳N个台阶 这是最好理解的；
 func CountNumberNV2(n int) int {
 	dp := make([]int, n+1)
 	dp[0] = 1
@@ -118,6 +120,27 @@ func CountNumberNMV2(n, m int) int {
 	for i := 1; i <= m; i++ {
 		for j := 1; j <= n && j <= i; j++ {
 			dp[i] += dp[i-j]
+		}
+	}
+	return dp[m]
+}
+
+func CountNumberNV3Manually(n, m int) int {
+	if m == 0 {
+		return 1
+	}
+	if m <= n {
+		return 1 << (m - 1) // 2^(m-1)
+	}
+	// 当 m > n 时，仍然需要递推
+	dp := make([]int, m+1)
+	dp[0] = 1
+	for i := 1; i <= m; i++ {
+		for j := 1; j <= n; j++ {
+			if j <= i {
+				dp[i] += dp[i-j] //这么写比较好理解，和前缀和很像， 也和求硬币数的最少组合数量很像，都是i-j思路；
+			}
+
 		}
 	}
 	return dp[m]

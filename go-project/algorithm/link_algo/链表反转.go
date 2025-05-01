@@ -30,6 +30,7 @@ func reverseList(head *ListNode) *ListNode {
 }
 
 // 翻转两个节点之间
+// 翻转后，节点后面不是断开的，不要追加在原来的链表上，就可以直接用了
 func reverseListBetweenNode(head *ListNode, tail *ListNode) (*ListNode, *ListNode) {
 	prev := tail.Next
 	current := head
@@ -44,6 +45,7 @@ func reverseListBetweenNode(head *ListNode, tail *ListNode) (*ListNode, *ListNod
 }
 
 // 翻转节点和后面k个
+// 翻转后，节点后面是断开的
 func reverseKNode(head, tail *ListNode, k int) (*ListNode, *ListNode) {
 	var pre *ListNode = nil
 	current := head
