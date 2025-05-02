@@ -6,24 +6,19 @@ import (
 
 func main() {
 	// demo
-
-	list := make([]int, 3)
-	/*for i := 0; i < len(list); i++ {
-		list = append(list, i)
+	/*b := make([]int, 1024)
+	c := make(map[int]int)
+	for v := range c {
+		c[v]++
 	}*/
-
-	for i := range list {
-		fmt.Println(i)
-
+	s := "中国 你好"
+	for i, v := range s {
+		fmt.Println("s[i]:", s[i])
+		fmt.Println(i, string(v))
 	}
-	fmt.Println(list)
-
-	maps := make(map[string]int)
-	maps["a"] = 1
-	maps["b"] = 2
-
-	for k, v := range maps {
-		fmt.Println(k, v)
+	fmt.Println(s)
+	for v := range s {
+		fmt.Println(string(v))
 	}
 
 }

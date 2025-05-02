@@ -17,25 +17,34 @@ func MaxInt(a, b int) int {
 /*
 思路，用hashSet判断，从当前节点，开始的，i+1，i+2是否存在，递增
 */
-func FindLengthIndexV3(list []int) int {
-	numSet := make(map[int]bool)
-	for _, num := range list {
-		numSet[num] = true
+
+func longestConsecutive(nums []int) int {
+	sumLength := 0
+	hashMap := make(map[int]bool)
+
+	for _, num := range nums {
+		hashMap[num] = true
 	}
 
-	maxInt := 0
-	for _, num := range list {
-		if numSet[num-1] {
+	// 这里循环list，会超时的，需要循环map，因为map已经去重了
+	for num, _ := range hashMap {
+		if hashMap[num-1] {
+			// 简单来说就是每个数都判断一次这个数是不是连续序列的开头那个数。
 			continue
 		}
+		//if !hashMap[num-1] {
 		currentNum := num
 		currentLength := 1
-		for numSet[currentNum+1] {
-			currentNum++
+		for hashMap[currentNum+1] {
 			currentLength++
+			currentNum++
 		}
+		if currentLength > sumLength {
+			sumLength = currentLength
+		}
+		//	}
 
-		maxInt = MaxInt(maxInt, currentLength)
 	}
-	return maxInt
+	return sumLength
+
 }
