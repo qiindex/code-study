@@ -59,3 +59,10 @@ func Partition(arr []int, low, high int) int {
 	arr[i+1], arr[high] = arr[high], arr[i+1]
 	return i + 1 // 返回 pivot 的索引
 }
+
+func binarySearch(nums []int, target int) int {
+	left ,right :=0,len(nums)-1
+	for left <=right{
+		mid :=left +()
+	}
+}
