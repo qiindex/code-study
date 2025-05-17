@@ -64,7 +64,7 @@ func coinChangeTwoDP(coins []int, amount int) int {
 	return dp[n][amount]
 }
 
-func main() {
+func main3() {
 	// 示例 1
 	coins1 := []int{1, 2, 5}
 	amount1 := 6

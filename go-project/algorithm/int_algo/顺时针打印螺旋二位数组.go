@@ -1,5 +1,9 @@
 package int_algo
 
+import (
+	"fmt"
+)
+
 /*
 给你一个 m 行 n 列的矩阵 matrix ，请按照 顺时针螺旋顺序 ，返回矩阵中的所有元素。
 // 顺时针螺旋打印N列二维数组，任务
@@ -13,7 +17,9 @@ package int_algo
 输出：[1,2,3,6,9,8,7,4,5]
 */
 
-// 官方题解：没看懂
+// 官方题解：没看懂, 先创建一个二维数组，然后从0,0开始，顺时针遍历，然后把值放到二维数组中
+// 时间复杂度：O(mn)，其中 m 和 n 分别是输入矩阵的行数和列数。矩阵中的每个元素都要被访问一次。
+// 空间复杂度：O(mn)。需要创建一个大小为 m×n 的矩阵 visited 记录每个位置是否被访问过。
 func spiralOrder(matrix [][]int) []int {
 	if len(matrix) == 0 || len(matrix[0]) == 0 {
 		return []int{}
@@ -95,12 +101,14 @@ func GenerateListV2(list [][]int, startRow, startCol int) []int {
 1 2
 
 */
-// 自己写的SpiralOrderV2
+// 自己写的SpiralOrderV2 按层遍历
+// 时间复杂度：O(mn)，其中 m 和 n 分别是输入矩阵的行数和列数。矩阵中的每个元素都要被访问一次。
+// 空间复杂度：O(1)。除了输出数组以外，空间复杂度是常数。
 func SpiralOrderV2(matrix [][]int) []int {
 	rows, cols := len(matrix), len(matrix[0])
 	leftCol, rightCol := 0, cols-1
 	topRow, bottomRow := 0, rows-1
-	//res := make([]int, 0, rows*cols) 这样没有给了容量，但是没有赋予0值，不会有问题；
+	//res := make([]int, 0, rows*cols) 这样没有给了容量，但是没有赋予长度：0值，不会有问题；
 	res := make([]int, 0) //len，容量和大小都是0，可以安心用append
 
 	for leftCol <= rightCol && topRow <= bottomRow {
@@ -127,7 +135,7 @@ func SpiralOrderV2(matrix [][]int) []int {
 		// 从下往上，遍历列；
 		//同时判断，是否存在列；
 		if leftCol <= rightCol {
-			for row := bottomRow; row > topRow; row-- {
+			for row := bottomRow; row >= topRow; row-- {
 				res = append(res, matrix[row][leftCol])
 			}
 			leftCol++
@@ -151,30 +159,27 @@ func SpiralOrderV2(matrix [][]int) []int {
 	2后面两个加的是if，没有直接break，是因为后面的两种情况，有可能其中一个不满足，另外一个是满足的；
 */
 
-/*
-func main() {
-    testCases := []struct {
-        matrix [][]int
-        want   []int
-    }{
-        {
-            matrix: [][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}},
-            want:   []int{1, 2, 3, 6, 9, 8, 7, 4, 5},
-        },
-        {
-            matrix: [][]int{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}},
-            want:   []int{1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7},
-        },
-        {
-            matrix: [][]int{{1}},
-            want:   []int{1},
-        },
-    }
+func main4() {
+	testCases := []struct {
+		matrix [][]int
+		want   []int
+	}{
+		{
+			matrix: [][]int{{1, 2, 3}, {4, 5, 6}, {7, 8, 9}},
+			want:   []int{1, 2, 3, 6, 9, 8, 7, 4, 5},
+		},
+		{
+			matrix: [][]int{{1, 2, 3, 4}, {5, 6, 7, 8}, {9, 10, 11, 12}},
+			want:   []int{1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7},
+		},
+		{
+			matrix: [][]int{{1}},
+			want:   []int{1},
+		},
+	}
 
-    for _, tc := range testCases {
-        got := spiralOrderV2(tc.matrix)
-        fmt.Printf("Input: %v\nOutput: %v\nExpected: %v\n\n", tc.matrix, got, tc.want)
-    }
+	for _, tc := range testCases {
+		got := SpiralOrderV2(tc.matrix)
+		fmt.Printf("Input: %v\nOutput: %v\nExpected: %v\n\n", tc.matrix, got, tc.want)
+	}
 }
-
-*/

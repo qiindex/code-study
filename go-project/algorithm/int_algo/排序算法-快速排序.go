@@ -7,7 +7,7 @@ import (
 	"math/rand"
 )
 
-func main() {
+func main2() {
 	//arr := []int{5, 3, 8, 4, 2, 7, 1, 10}
 	arr := []int{110, 100, 0}
 	QuickSort(arr, 0, len(arr)-1)
