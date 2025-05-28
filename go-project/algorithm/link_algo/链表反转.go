@@ -35,7 +35,7 @@ func reverseListBetweenNode(head *ListNode, tail *ListNode) (*ListNode, *ListNod
 	prev := tail.Next
 	current := head
 	for prev != tail {
-		nextTemp := prev.Next
+		nextTemp := current.Next
 		current.Next = prev
 		prev = current
 		current = nextTemp
@@ -46,7 +46,7 @@ func reverseListBetweenNode(head *ListNode, tail *ListNode) (*ListNode, *ListNod
 
 // 翻转节点和后面k个
 // 翻转后，节点后面是断开的
-func reverseKNode(head, tail *ListNode, k int) (*ListNode, *ListNode) {
+func reverseKNode(head *ListNode, k int) (*ListNode, *ListNode) {
 	var pre *ListNode = nil
 	current := head
 
@@ -59,3 +59,40 @@ func reverseKNode(head, tail *ListNode, k int) (*ListNode, *ListNode) {
 	return pre, head
 
 }
+
+//反转后，pre指向这一段的末尾，cur指向这一段的后续的第一个节点
+
+/*
+92. 反转链表 II
+给你单链表的头指针 head 和两个整数 left 和 right ，其中 left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表 。
+给你单链表的头指针 head 和两个整数 left 和 right
+，其中 left <= right 。请你反转从位置 left 到位置 right 的链表节点，返回 反转后的链表
+*/
+func reverseBetween(head *ListNode, left int, right int) *ListNode {
+
+	dummy := &ListNode{Next: head}
+	p0 := dummy
+	//var pre *ListNode =nil
+	for i := 1; i < left; i++ { // left-1
+		p0 = p0.Next
+	}
+	var pre *ListNode = nil
+	current := p0.Next
+	for i := left; i <= right; i++ {
+		nxt := current.Next
+		current.Next = pre
+		pre = current
+		current = nxt
+
+	}
+	p0.Next.Next = current
+	p0.Next = pre
+
+	return dummy.Next
+}
+
+/* 反转后：
+核心思路（茶同学的方法）
+pre 指向这一段的末尾位置
+current指向下一段的开始位置
+*/

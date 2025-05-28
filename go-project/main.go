@@ -1,14 +1,33 @@
 package main
 
-import (
-	"go-project/algorithm/link_algo"
-)
+/*
+	K 个一组翻转链表
 
-var a int
+输入：head = [1,2,3,4,5], k = 2
+输出：[2,1,4,3,5]
+*/
 
 func main() {
-	//
-	list2 := link_algo.CreateList([]int{1, 2, 3, 4, 5})
-	reverse := link_algo.Reverse(list2, 2)
-	link_algo.PrintList(reverse)
+	/*	linkList := &link_algo.ListNode{
+			Val: 1,
+			Next: &link_algo.ListNode{
+				Val: 2,
+				Next: &link_algo.ListNode{
+					Val: 3,
+					Next: &link_algo.ListNode{
+						Val: 4,
+						Next: &link_algo.ListNode{
+							Val:  5,
+							Next: nil,
+						},
+					},
+				},
+			},
+		}
+		head := Reverse(linkList, 2)
+		for head != nil {
+			fmt.Print(head.Val)
+			head = head.Next
+		}*/
+
 }

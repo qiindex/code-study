@@ -50,9 +50,32 @@ func ReverseKGroup(head *ListNode, k int) *ListNode {
 	return dummy.Next
 }
 
-/*func reverseKNumber(head * ListNode,k int)	(*ListNode,*ListNode)  {
+// 用茶同学的方法写；在（92）反转链表2的基础上写；反转left 到right之间的链表
+func RReverseKGroup(head *ListNode, k int) *ListNode {
 	current := head
-	for
+	n := 0
+	for current != nil {
+		current = current.Next
+		n = n + 1
+	}
+	dummy := &ListNode{Next: head}
+	p0 := dummy
 
+	for n >= k {
+		n = n - k
+		var pre *ListNode = nil
+		current = p0.Next
+		for i := 0; i < k; i++ {
+			nxt := current.Next
+			current.Next = pre
+			pre = current
+			current = nxt
+		}
+		next := p0.Next //新增
+		p0.Next.Next = current
+		p0.Next = pre
+		p0 = next // 新增
+
+	}
+	return dummy.Next
 }
-*/
