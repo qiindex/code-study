@@ -71,10 +71,10 @@ func RReverseKGroup(head *ListNode, k int) *ListNode {
 			pre = current
 			current = nxt
 		}
-		next := p0.Next //新增
+		next := p0.Next //新增 //next是 1，在12345反转中，相当于前进了一次
 		p0.Next.Next = current
 		p0.Next = pre
-		p0 = next // 新增
+		p0 = next // 新增 /p0 这里变成1了
 
 	}
 	return dummy.Next

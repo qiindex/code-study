@@ -1,82 +1,128 @@
 package main
 
-import (
-	"math"
-	"math/bits"
-)
+import "fmt"
 
-type Int256 struct {
-	data []uint64
+// ListNode 定义单链表节点
+type ListNode struct {
+	Val  int
+	Next *ListNode
 }
 
-func (int256 *Int256) init() *Int256 {
-
-	return &Int256{
-		data: []uint64{0, 1, 2, 3},
+// createList 根据整数数组创建单链表
+func createList(nums []int) *ListNode {
+	if len(nums) == 0 {
+		return nil
 	}
+	head := &ListNode{Val: nums[0]}
+	cur := head
+	for i := 1; i < len(nums); i++ {
+		cur.Next = &ListNode{Val: nums[i]}
+		cur = cur.Next
+	}
+	return head
 }
 
-func (a *Int256) add(b Int256) Int256 {
-	carry := uint64(0)
-	//carryBit := uint(0)
+// printList 打印链表中的所有节点值
+func printList(head *ListNode) {
+	cur := head
+	for cur != nil {
+		fmt.Print(cur.Val, " ")
+		cur = cur.Next
+	}
+	fmt.Println()
+}
 
-	sums := Int256{data: make([]uint64, len(a.data))}
-	for i := 3; i >= 0; i-- {
-		sum := carry + a.data[i] + b.data[i]
+func main1() {
+	// 示例 1: 链表 1->2->3->4->5，翻转第 2 到第 4 个节点
+	nums := []int{1, 2, 3, 4, 5}
+	head := createList(nums)
+	fmt.Print("原链表: ")
+	printList(head)
 
-		if sum < b.data[i] || sum < a.data[i] {
-			carry = 1
-		} else {
-			carry = 0
+	m, n := 2, 4
+	newHead := reverseBetween(head, m, n)
+	fmt.Printf("翻转 [%d,%d] 后的链表: ", m, n)
+	printList(newHead)
+
+	// 示例 2: 链表 1->2->3->4->5，翻转第 1 到第 5 个节点（整个链表）
+	nums = []int{1, 2, 3, 4, 5}
+	head = createList(nums)
+	fmt.Print("\n原链表: ")
+	printList(head)
+
+	m, n = 1, 5
+	newHead = reverseBetween(head, m, n)
+	fmt.Printf("翻转 [%d,%d] 后的链表: ", m, n)
+	printList(newHead)
+
+	// 示例 3: 链表 1->2->3->4->5，翻转第 3 到第 3 个节点（无需翻转）
+	nums = []int{1, 2, 3, 4, 5}
+	head = createList(nums)
+	fmt.Print("\n原链表: ")
+	printList(head)
+
+	m, n = 3, 3
+	newHead = reverseBetween(head, m, n)
+	fmt.Printf("翻转 [%d,%d] 后的链表: ", m, n)
+	printList(newHead)
+}
+
+func reverseBetween(head *ListNode, left int, right int) *ListNode {
+	dummy := &ListNode{Next: head, Val: 0}
+	P0 := dummy
+	for i := 1; i < left; i++ {
+		//left-1
+		P0 = P0.Next
+	}
+	current := P0.Next
+	var pre *ListNode = nil
+	for i := 0; i < right-left+1; i++ {
+		// right-left+1 4-2+1=3
+		next := current.Next
+		current.Next = pre
+		pre = current
+		current = next
+	}
+	P0.Next.Next = current
+	P0.Next = pre
+
+	return dummy.Next
+}
+
+/*
+原链表: 1 2 3 4 5
+翻转 2 后的链表: 2 1 3 4 5
+*/
+func reverseBetweenK(head *ListNode, k int) *ListNode {
+	dummy := &ListNode{Next: head, Val: 0}
+	p0 := dummy
+	n := 0
+	current1 := head
+	for current1 != nil {
+		n += 1
+		current1 = current1.Next
+	}
+	for n-k >= 0 {
+		n = n - k
+		var pre *ListNode = nil
+		current := p0.Next
+		fmt.Println(current.Val)
+		for i := 0; i < k; i++ {
+			next := current.Next
+			current.Next = pre
+			pre = current
+			current = next
 		}
-		sum = sum & math.MaxUint64
-		sums.data[i] = sum
-		//sums.data[i]), carryBit = bits.Add(uint(a.data[i]), uint(b.data[i]), uint(carry))更优雅
+		nxt := p0.Next //next是1
+		p0.Next.Next = current
+		p0.Next = pre
+		p0 = nxt //p0 这里变成1
 	}
-
-	//
-	if carry == 1 {
-		panic("Int256 overflow")
-		//return Int256{data: []uint64{0, 0, 0, 0}}
-	}
-	return sums
+	return dummy.Next
 }
-
-// Add 实现256位加法（使用bits.Add处理进位）
-
-func (a *Int256) sub(b Int256) Int256 {
-	carry := uint64(0)
-	sums := Int256{data: make([]uint64, len(a.data))}
-	for i := 3; i >= 0; i-- {
-		if a.data[i] >= b.data[i]+carry {
-			sums.data[i] = a.data[i] - b.data[i] - carry
-			carry = 0
-		} else {
-			sums.data[i], carry = bits.Sub64(a.data[i], b.data[i], carry) //这种方式更优雅
-			//sums.data[i] = a.data[i] + (math.MaxUint64) - b.data[i] - carry //这样容易理解；直接依赖 uint64 的回绕特性，相当于0-1：1<<64 - 1
-			//carry = 1
-		}
-	}
-
-	if carry == 1 {
-		// 这里应该返回一个表示下溢的值，而不是全0
-		// 可以panic或者返回一个特殊值
-		panic("Int256 underflow")
-	}
-	return sums
-}
-
 func main() {
-	a := &Int256{}
-	a = a.init()
-
-	b := Int256{data: []uint64{0, 0, 0, 1}} // 1
-
-	// 测试加法
-	sum := a.add(b)
-	println("sum:", sum.data[0], sum.data[1], sum.data[2], sum.data[3])
-
-	// 测试减法
-	diff := a.sub(b)
-	println("diff:", diff.data[0], diff.data[1], diff.data[2], diff.data[3])
+	//
+	list2 := createList([]int{1, 2, 3, 4, 5})
+	reverse := reverseBetweenK(list2, 2)
+	printList(reverse)
 }

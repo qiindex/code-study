@@ -91,6 +91,9 @@ func reverseBetween(head *ListNode, left int, right int) *ListNode {
 	return dummy.Next
 }
 
+// 原链表: 1 2 3 4 5
+//翻转 [2,4] 后的链表: 1 4 3 2 5
+
 /* 反转后：
 核心思路（茶同学的方法）
 pre 指向这一段的末尾位置
