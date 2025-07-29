@@ -1,128 +1,53 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
-// ListNode 定义单链表节点
-type ListNode struct {
-	Val  int
-	Next *ListNode
+func main() {
+
+	s := "sdf - dasf"
+	fmt.Println(strings.ToUpper(s))
 }
-
-// createList 根据整数数组创建单链表
-func createList(nums []int) *ListNode {
-	if len(nums) == 0 {
-		return nil
-	}
-	head := &ListNode{Val: nums[0]}
-	cur := head
-	for i := 1; i < len(nums); i++ {
-		cur.Next = &ListNode{Val: nums[i]}
-		cur = cur.Next
-	}
-	return head
-}
-
-// printList 打印链表中的所有节点值
-func printList(head *ListNode) {
-	cur := head
-	for cur != nil {
-		fmt.Print(cur.Val, " ")
-		cur = cur.Next
-	}
-	fmt.Println()
-}
-
-func main1() {
-	// 示例 1: 链表 1->2->3->4->5，翻转第 2 到第 4 个节点
-	nums := []int{1, 2, 3, 4, 5}
-	head := createList(nums)
-	fmt.Print("原链表: ")
-	printList(head)
-
-	m, n := 2, 4
-	newHead := reverseBetween(head, m, n)
-	fmt.Printf("翻转 [%d,%d] 后的链表: ", m, n)
-	printList(newHead)
-
-	// 示例 2: 链表 1->2->3->4->5，翻转第 1 到第 5 个节点（整个链表）
-	nums = []int{1, 2, 3, 4, 5}
-	head = createList(nums)
-	fmt.Print("\n原链表: ")
-	printList(head)
-
-	m, n = 1, 5
-	newHead = reverseBetween(head, m, n)
-	fmt.Printf("翻转 [%d,%d] 后的链表: ", m, n)
-	printList(newHead)
-
-	// 示例 3: 链表 1->2->3->4->5，翻转第 3 到第 3 个节点（无需翻转）
-	nums = []int{1, 2, 3, 4, 5}
-	head = createList(nums)
-	fmt.Print("\n原链表: ")
-	printList(head)
-
-	m, n = 3, 3
-	newHead = reverseBetween(head, m, n)
-	fmt.Printf("翻转 [%d,%d] 后的链表: ", m, n)
-	printList(newHead)
-}
-
-func reverseBetween(head *ListNode, left int, right int) *ListNode {
-	dummy := &ListNode{Next: head, Val: 0}
-	P0 := dummy
-	for i := 1; i < left; i++ {
-		//left-1
-		P0 = P0.Next
-	}
-	current := P0.Next
-	var pre *ListNode = nil
-	for i := 0; i < right-left+1; i++ {
-		// right-left+1 4-2+1=3
-		next := current.Next
-		current.Next = pre
-		pre = current
-		current = next
-	}
-	P0.Next.Next = current
-	P0.Next = pre
-
-	return dummy.Next
+func HoursToSeconds(hours float64) uint64 { // 输入的小时数
+	seconds := uint64(hours * 3600)
+	return seconds
 }
 
 /*
-原链表: 1 2 3 4 5
-翻转 2 后的链表: 2 1 3 4 5
+给定一个整数数组 temperatures ，表示每天的温度，返回一个数组 answer ，其中 answer[i] 是指对于第 i 天，下一个更高温度出现在几天后。如果气温在这之后都不会升高，请在该位置用 0 来代替。
+
+
+
+示例 1:
+
+输入: temperatures = [73,74,75,71,69,72,76,73]
+输出: [1,1,4,2,1,1,0,0]
+示例 2:
+
+输入: temperatures = [30,40,50,60]
+输出: [1,1,1,0]
+示例 3:
+
+输入: temperatures = [30,60,90]
+输出: [1,1,0]
+
 */
-func reverseBetweenK(head *ListNode, k int) *ListNode {
-	dummy := &ListNode{Next: head, Val: 0}
-	p0 := dummy
-	n := 0
-	current1 := head
-	for current1 != nil {
-		n += 1
-		current1 = current1.Next
-	}
-	for n-k >= 0 {
-		n = n - k
-		var pre *ListNode = nil
-		current := p0.Next
-		fmt.Println(current.Val)
-		for i := 0; i < k; i++ {
-			next := current.Next
-			current.Next = pre
-			pre = current
-			current = next
+
+func dailyTemperatures(temperatures []int) []int {
+	n := len(temperatures)
+	ans := make([]int, n)
+	stack := []int{}
+	for i := 0; i < n; i++ {
+		if len(stack) > 0 || temperatures[i] >= temperatures[stack[len(stack)-1]] {
+			topIndex := stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			ans[topIndex] = i - topIndex
 		}
-		nxt := p0.Next //next是1
-		p0.Next.Next = current
-		p0.Next = pre
-		p0 = nxt //p0 这里变成1
+
+		stack = append(stack, i)
 	}
-	return dummy.Next
-}
-func main() {
-	//
-	list2 := createList([]int{1, 2, 3, 4, 5})
-	reverse := reverseBetweenK(list2, 2)
-	printList(reverse)
+
+	return ans
 }
